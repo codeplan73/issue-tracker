@@ -1,11 +1,9 @@
-import React from 'react'
+import IssueForm from '../_components/IssueForm'
+
+interface Props {}
 
 const EditIssuePage = () => {
-  return (
-    <div>
-      <h2>EditIssuePage</h2>
-    </div>
-  )
+  return <IssueForm />
 }
 
 export default EditIssuePage

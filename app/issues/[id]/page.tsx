@@ -1,14 +1,14 @@
 import React from 'react'
 import prisma from '@/prisma/client'
 import { notFound } from 'next/navigation'
+import { Heading, Text, Flex, Card } from '@radix-ui/themes'
+import IssueStatusBade from '@/app/components/IssueStatusBade'
 
 interface Props {
   params: { id: string }
 }
 
 const IssueDetails = async ({ params }: Props) => {
-  if (typeof params.id !== 'number') return notFound()
-
   const issue = await prisma.issue.findUnique({
     where: { id: parseInt(params.id) },
   })
@@ -17,10 +17,12 @@ const IssueDetails = async ({ params }: Props) => {
 
   return (
     <div>
-      <p>{issue.title}</p>
-      <p>{issue.description}</p>
-      <p>{issue.status}</p>
-      <p>{issue.createdAt.toDateString()}</p>
+      <Heading>{issue.title}</Heading>
+      <Flex className="space-x-3" my="2">
+        <IssueStatusBade status={issue.status} />
+        <Text>{issue.createdAt.toDateString()}</Text>
+      </Flex>
+      <Card>{issue.description}</Card>
     </div>
   )
 }

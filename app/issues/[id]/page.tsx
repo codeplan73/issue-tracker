@@ -19,7 +19,7 @@ const IssueDetails = async ({ params }: Props) => {
   return (
     <div>
       <Heading>{issue.title}</Heading>
-      <Flex className="space-x-3" my="2">
+      <Flex className="space-x-3" my="4">
         <IssueStatusBade status={issue.status} />
         <Text>{issue.createdAt.toDateString()}</Text>
       </Flex>

@@ -1,22 +1,23 @@
 'use client'
-import { Button, Callout, TextField, Text } from '@radix-ui/themes'
-import React, { useState } from 'react'
-import dynamic from 'next/dynamic'
+import { Button, Callout, TextField } from '@radix-ui/themes'
+import { useState } from 'react'
 // import SimpleMDE from 'react-simplemde-editor'
-import { useForm, Controller } from 'react-hook-form'
-import 'easymde/dist/easymde.min.css'
-import axios from 'axios'
-import { useRouter } from 'next/navigation'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { ErrorMessage, Spinner } from '@/app/components'
 import { issueSchema } from '@/app/validationSchemas'
-import { z } from 'zod'
-import { Spinner, ErrorMessage } from '@/app/components'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Issue } from '@prisma/client'
+import axios from 'axios'
+import 'easymde/dist/easymde.min.css'
+import { useRouter } from 'next/navigation'
+import { Controller, useForm } from 'react-hook-form'
+import { z } from 'zod'
+
+import SimpleMDE from 'react-simplemde-editor'
 
 // lazy loading markdown
-const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
-  ssr: false,
-})
+// const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
+//   ssr: false,
+// })
 
 type IssueFormData = z.infer<typeof issueSchema>
 

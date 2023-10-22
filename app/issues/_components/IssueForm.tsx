@@ -11,6 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { createIssueSchema } from '@/app/validationSchemas'
 import { z } from 'zod'
 import { Spinner, ErrorMessage } from '@/app/components'
+import { Issue } from '@prisma/client'
 
 // lazy loading markdown
 const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
@@ -19,7 +20,9 @@ const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
 
 type IssueFormData = z.infer<typeof createIssueSchema>
 
-const NewIssuePage = () => {
+// define type for both edith and new issues form data
+
+const IssueForm = ({ issue }: { issue?: Issue }) => {
   const router = useRouter()
 
   const {
@@ -52,12 +55,17 @@ const NewIssuePage = () => {
       )}
       <form className="space-y-3" onSubmit={onSubmit}>
         <TextField.Root>
-          <TextField.Input {...register('title')} placeholder="Title" />
+          <TextField.Input
+            defaultValue={issue?.title}
+            {...register('title')}
+            placeholder="Title"
+          />
         </TextField.Root>
         <ErrorMessage>{errors.title?.message}</ErrorMessage>
         <Controller
           name="description"
           control={control}
+          defaultValue={issue?.description}
           render={({ field }) => (
             <SimpleMDE placeholder="Description" {...field} />
           )}
@@ -71,4 +79,4 @@ const NewIssuePage = () => {
   )
 }
 
-export default NewIssuePage
+export default IssueForm

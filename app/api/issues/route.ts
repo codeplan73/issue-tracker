@@ -1,8 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server'
 import prisma from '@/prisma/client'
 import { issueSchema } from '../../validationSchemas'
+import authOptions from '@/app/auth/authOptions'
+import { getServerSession } from 'next-auth'
 
 export async function POST(request: NextRequest) {
+  const session = await getServerSession(authOptions)
+
+  if (!session)
+    return NextResponse.json(
+      { messsage: 'You are not authorized to access this page' },
+      { status: 401 }
+    )
+
   const body = await request.json()
   const validation = issueSchema.safeParse(body)
 

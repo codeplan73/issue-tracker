@@ -8,16 +8,16 @@ export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const session = await getServerSession(authOptions)
+  // const session = await getServerSession(authOptions)
 
-  if (!session)
-    return NextResponse.json(
-      { messsage: 'You are not authorized to access this page' },
-      { status: 401 }
-    )
+  // if (!session)
+  //   return NextResponse.json(
+  //     { messsage: 'You are not authorized to access this page' },
+  //     { status: 401 }
+  //   )
 
   const body = await request.json()
-  const validation = issueSchema.safeParse(body)
+  const validation = patchIssueSchema.safeParse(body)
   if (!validation.success)
     return NextResponse.json(validation.error.format(), { status: 400 })
 
